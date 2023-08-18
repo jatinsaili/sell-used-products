@@ -10,10 +10,10 @@ const AdController = {
             adsSnapshot.forEach(doc => {
                 ads.push({ id: doc.id, ...doc.data() });
             });
-            res.render('adsList', { ads });
+            res.render('index', { ads });
         } catch (error) {
             console.error("Error listing ads:", error);
-            res.render('adsList', { error: "Failed to fetch ads. Please try again." });
+            res.render('index', { error: "Failed to fetch ads. Please try again." });
         }
     },
 
