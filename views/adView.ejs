@@ -34,7 +34,7 @@
     <% if (userId !== ad.userId) { %>
         <a href="/questions/<%= id %>/question" class="btn btn-primary mt-3">Ask Question</a>
     <% } else { %>
-        <a href="/ads/<%= id %>/disable" class="btn btn-danger mt-3">Disable Ad</a>
+        <a href="/ads/disable/<%= id %>" class="btn btn-danger mt-3">Disable Ad</a>
     <% } %>
     <a href="/" class="btn btn-secondary mt-3 ml-2">Back to Ads List</a>
 </div>
