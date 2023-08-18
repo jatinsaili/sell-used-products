@@ -1,0 +1,17 @@
+<%- include('partials/head', { title: 'Answer Question' }) %>
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Answer Question</h1>
+    <p><strong>Question:</strong> <%= question.content %></p>
+
+    <form action="/questions/answer/<%= question.id %>" method="post">
+        <div class="form-group">
+            <label for="answer">Your Answer:</label>
+            <textarea class="form-control" id="answer" name="answer" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Answer</button>
+    </form>
+</div>
+
+<%- include('partials/footer') %>
