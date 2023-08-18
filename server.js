@@ -10,10 +10,8 @@ const AdController = require('./controllers/adController');
 const app = express();
 const PORT = 3000;
 
-// Sample route (You'll set up more routes later)
-app.get('/', (req, res) => {
-  AdController.listAds
-});
+// main page
+app.get('/', AdController.listAds);
 
 app.use('/user', userRoutes);
 app.use('/ads', adRoutes);
