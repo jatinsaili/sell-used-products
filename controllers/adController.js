@@ -51,7 +51,8 @@ const AdController = {
     // Post an Ad
     postAd: async (req, res) => {
         try {
-            const { userId, title, description, startDate, endDate } = req.body;
+            const { title, description, startDate, endDate } = req.body;
+            const userId = req.session.userId;
 
             const adRef = db.collection('ads').doc(); // Create a new doc with a generated ID
             await adRef.set({
@@ -62,7 +63,7 @@ const AdController = {
                 endDate
             });
 
-            res.redirect('/myads');
+            res.redirect('/ads/myads');
         } catch (error) {
             console.error("Error posting ad:", error);
             res.render('postAd', { error: "Failed to post ad. Please try again." });
@@ -77,7 +78,7 @@ const AdController = {
         if (ad.exists) {
             res.render('editAd', {error:null, ad: ad.data() });
         } else {
-            res.redirect('/myads', { error: "Ad not found." });
+            res.redirect('/ads/myads', { error: "Ad not found." });
         }
     },
 
@@ -95,7 +96,7 @@ const AdController = {
                 endDate
             });
 
-            res.redirect('/myads'); // Redirect to user's ads page
+            res.redirect('/ads/myads'); // Redirect to user's ads page
 
         } catch (error) {
             console.error("Error editing ad:", error);
@@ -113,10 +114,10 @@ const AdController = {
                 endDate: new Date().toISOString() // Set the end date to now to disable the ad
             });
 
-            res.redirect('/myads'); // Redirect to user's ads page
+            res.redirect('/ads/myads'); // Redirect to user's ads page
         } catch (error) {
             console.error("Error disabling ad:", error);
-            res.redirect('/myads', { error: "Failed to disable ad. Please try again." });
+            res.redirect('/ads/myads', { error: "Failed to disable ad. Please try again." });
         }
     },
 
