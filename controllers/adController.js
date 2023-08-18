@@ -45,7 +45,7 @@ const AdController = {
 
     // Display post ad form
     postAdForm: (req, res) => {
-        res.render('postAdForm');
+        res.render('postAd');
     },
 
     // Post an Ad
@@ -75,7 +75,7 @@ const AdController = {
         const adRef = db.collection('ads').doc(adId);
         const ad = await adRef.get();
         if (ad.exists) {
-            res.render('editAdForm', { ad: ad.data() });
+            res.render('editAd', { ad: ad.data() });
         } else {
             res.redirect('/myads', { error: "Ad not found." });
         }
@@ -116,7 +116,7 @@ const AdController = {
             res.redirect('/myads'); // Redirect to user's ads page
         } catch (error) {
             console.error("Error disabling ad:", error);
-            res.redirect('/', { error: "Failed to disable ad. Please try again." });
+            res.redirect('/myads', { error: "Failed to disable ad. Please try again." });
         }
     },
 
