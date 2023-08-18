@@ -12,7 +12,7 @@ router.get('/edit/:adId', isAuthenticated, AdsController.editAdForm); // Display
 router.post('/edit/:adId', isAuthenticated, AdsController.editAd);
 
 // Disable or expire an ad
-router.post('/disable/:adId', isAuthenticated, AdsController.disableAd);
+router.get('/disable/:adId', isAuthenticated, AdsController.disableAd);
 
 // List ads created by the user
 router.get('/myads', isAuthenticated, AdsController.myAds);

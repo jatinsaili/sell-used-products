@@ -75,7 +75,7 @@ const AdController = {
         const adRef = db.collection('ads').doc(adId);
         const ad = await adRef.get();
         if (ad.exists) {
-            res.render('editAd', {error:null, ad: ad.data() });
+            res.render('editAd', {error:null, adId, ad: ad.data() });
         } else {
             res.redirect('/ads/myads', { error: "Ad not found." });
         }
@@ -113,7 +113,7 @@ const AdController = {
                 endDate: new Date().toISOString() // Set the end date to now to disable the ad
             });
 
-            res.redirect('/ads/myads'); // Redirect to user's ads page
+            res.redirect('/'); // Redirect to user's ads page
         } catch (error) {
             console.error("Error disabling ad:", error);
             res.redirect('/ads/myads', { error: "Failed to disable ad. Please try again." });
