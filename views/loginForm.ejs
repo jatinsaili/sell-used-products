@@ -2,26 +2,37 @@
 <%- include('partials/header') %>
 
 <div class="container mt-5">
-    <h1 class="mb-4">Login</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Login</h3>
+                </div>
+                <div class="card-body">
+                    <% if (error) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <%= error %>
+                        </div>
+                    <% } %>
 
-    <% if (error) { %>
-        <div class="alert alert-danger" role="alert">
-            <%= error %>
+                    <form action="/user/login" method="post">
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" class="form-control form-control-lg" id="username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control form-control-lg" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <p><a href="/user/register" class="text-danger">Not Registered with Us? Sign Up!</a></p>
+                </div>
+            </div>
         </div>
-    <% } %>
-
-    <form action="/user/login" method="post">
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-    <p><a href="/user/register">Not Registered with Us? Sign Up!</a></p>
+    </div>
 </div>
 
 <%- include('partials/footer') %>
