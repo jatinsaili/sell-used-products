@@ -1,6 +1,7 @@
 // Required modules
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 const session = require('express-session');
 const db = require('./firebaseConfig');
 const userRoutes = require('./routes/user');
@@ -13,11 +14,16 @@ const app = express();
 const PORT = 3000;
 
 app.use(session({
-    secret: 'your-secret-key',
+    secret: 'my-secret-key',
     resave: false,
     saveUninitialized: true
 }));
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 // Set up EJS as the view engine
 app.set('view engine', 'ejs');
