@@ -5,7 +5,7 @@ const QuestionController = {
     // Display the form to post a new question
     addQuestionForm: (req, res) => {
         const adId = req.params.adId;
-        res.render('addQuestionForm', { adId });
+        res.render('askQuestionForm', { adId });
     },
 
     // Display the form to answer a question
