@@ -5,12 +5,12 @@ const UserController = {
 
     // Display the registration form
     registerForm: (req, res) => {
-        res.render('registerForm');
+        res.render('registerForm', {error: null});
     },
 
     // Display the login form
     loginForm: (req, res) => {
-        res.render('loginForm');
+        res.render('loginForm', {error: null});
     },
 
     
