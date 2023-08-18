@@ -121,7 +121,34 @@ const UserController = {
             console.error("Error updating profile:", error);
             res.render('profile', { error: "Failed to update profile. Please try again." });
         }
+    },
+
+    // View a specific user's profile and their ads
+    viewSpecificUserProfile: async (req, res) => {
+        try {
+            const userId = req.params.userId; // Get user ID from the route parameter
+            const userRef = db.collection('users').doc(userId);
+            const user = await userRef.get();
+
+            if (!user.exists) {
+                res.redirect('/dashboard', { error: "User not found." });
+                return;
+            }
+
+            // Fetch all ads created by the user
+            const adsSnapshot = await db.collection('ads').where('userId', '==', userId).get();
+            const ads = [];
+            adsSnapshot.forEach(doc => {
+                ads.push({ id: doc.id, ...doc.data() });
+            });
+
+            res.render('specificUserProfile', { user: user.data(), ads });
+        } catch (error) {
+            console.error("Error viewing specific user profile:", error);
+            res.redirect('/dashboard', { error: "Failed to fetch user profile. Please try again." });
+        }
     }
+
 };
 
 module.exports = UserController;
