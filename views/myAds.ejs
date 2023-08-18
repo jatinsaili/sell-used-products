@@ -1,0 +1,33 @@
+<%- include('partials/head', { title: 'My Ads' }) %>
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+    <h1 class="mb-4">My Ads</h1>
+    
+    <% if (error) { %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+    <% } %>
+
+    <% if (ads && ads.length > 0) { %>
+        <ul class="list-group">
+            <% ads.forEach(ad => { %>
+                <li class="list-group-item">
+                    <h5><%= ad.title %></h5>
+                    <p><%= ad.description %></p>
+                    <p>Start Date: <%= ad.startDate %></p>
+                    <p>End Date: <%= ad.endDate %></p>
+                    <a href="/ads/view/<%= ad.id %>" class="btn btn-primary">View Ad</a>
+                    <a href="/ads/edit/<%= ad.id %>" class="btn btn-warning">Edit Ad</a>
+                    <a href="/ads/disable/<%= ad.id %>" class="btn btn-danger">Disable Ad</a>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>You haven't posted any ads yet.</p>
+    <% } %>
+
+</div>
+
+<%- include('partials/footer') %>
