@@ -22,13 +22,18 @@
                 <div id="collapse<%= index %>" class="collapse" aria-labelledby="heading<%= index %>" data-parent="#questionsAccordion">
                     <div class="card-body">
                         <%= question.answer ? question.answer : 'No answer yet.' %>
+                        <% if (!question.answer && res.locals.userId === ad.userId) { %>
+                            <a href="/questions/<%= question.id %>/answer" class="btn btn-primary mt-2">Answer Now</a>
+                        <% } %>
                     </div>
                 </div>
             </div>
         <% }) %>
     </div>
 
-    <a href="/questions/<%= id %>/question" class="btn btn-primary mt-3">Ask Question</a>
+    <% if (res.locals.userId !== ad.userId) { %>
+        <a href="/questions/<%= id %>/question" class="btn btn-primary mt-3">Ask Question</a>
+    <% } %>
     <a href="/" class="btn btn-secondary mt-3 ml-2">Back to Ads List</a>
 </div>
 

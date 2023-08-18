@@ -4,7 +4,7 @@
 <div class="container mt-5">
     <h1 class="mb-4">Ask a Question</h1>
 
-    <form action="/questions/add/<%= adId %>" method="post">
+    <form action="/questions/<%= adId %>/question" method="post">
         <div class="form-group">
             <label for="content">Your Question:</label>
             <textarea class="form-control" id="content" name="content" rows="3" required></textarea>

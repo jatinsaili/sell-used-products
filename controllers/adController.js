@@ -18,13 +18,12 @@ const AdController = {
     },
 
 
-    // View a single ad
     viewAd: async (req, res) => {
         try {
             const adId = req.params.adId;
             const adRef = db.collection('ads').doc(adId);
             const ad = await adRef.get();
-
+    
             if (ad.exists) {
                 // Fetch related questions and answers
                 const questionsSnapshot = await db.collection('questions').where('adId', '==', adId).get();
@@ -32,7 +31,7 @@ const AdController = {
                 questionsSnapshot.forEach(doc => {
                     questions.push({ id: doc.id, ...doc.data() });
                 });
-
+    
                 res.render('adView', {id: adId, ad: ad.data(), questions });
             } else {
                 res.redirect('/');

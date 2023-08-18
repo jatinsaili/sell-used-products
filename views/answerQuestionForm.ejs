@@ -5,7 +5,7 @@
     <h1 class="mb-4">Answer Question</h1>
     <p><strong>Question:</strong> <%= question.content %></p>
 
-    <form action="/questions/answer/<%= question.id %>" method="post">
+    <form action="/questions/<%= question.adId %>/answer/<%= question.id %>" method="post">
         <div class="form-group">
             <label for="answer">Your Answer:</label>
             <textarea class="form-control" id="answer" name="answer" rows="3" required></textarea>
