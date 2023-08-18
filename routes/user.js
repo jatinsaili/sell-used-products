@@ -17,7 +17,7 @@ router.get('/logout', isAuthenticated, UserController.logout);
 // Modify user profile
 router.get('/profile', isAuthenticated, UserController.viewProfile);
 router.get('/profile/edit', isAuthenticated, UserController.editProfileForm); // Display profile edit form
-router.put('/profile', isAuthenticated, UserController.modifyProfile);
+router.post('/profile', isAuthenticated, UserController.modifyProfile);
 
 // View a specific user's profile and their ads
 router.get('/:userId', isAuthenticated, UserController.viewSpecificUserProfile);

@@ -116,10 +116,10 @@ const UserController = {
                 email
             });
 
-            res.render('profile', { success: "Profile updated successfully." });
+            res.redirect('/user/profile');
         } catch (error) {
             console.error("Error updating profile:", error);
-            res.render('profile', { error: "Failed to update profile. Please try again." });
+            res.redirect('/user/profile');
         }
     },
 
@@ -142,7 +142,7 @@ const UserController = {
                 ads.push({ id: doc.id, ...doc.data() });
             });
 
-            res.render('specificUserProfile', { user: user.data(), ads });
+            res.render('userProfile', { user: user.data(), ads });
         } catch (error) {
             console.error("Error viewing specific user profile:", error);
             res.redirect({ error: "Failed to fetch user profile. Please try again." }, '/');
