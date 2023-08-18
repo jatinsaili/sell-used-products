@@ -3,19 +3,29 @@
 
 <div class="container mt-5">
     <h1 class="mb-4">Active Ads</h1>
-    <div class="row">
-        <% ads.forEach(ad => { %>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><%= ad.title %></h5>
-                        <p class="card-text"><%= ad.description %></p>
-                        <a href="/ads/<%= ad.id %>" class="btn btn-primary">View Ad</a>
+    <% if (noAds) { %>
+        <div class="jumbotron">
+            <h1 class="display-4">No ads found</h1>
+            <p class="lead">It seems there are no active ads at the moment.</p>
+            <hr class="my-4">
+            <p>Want to post a new ad? Click the button below.</p>
+            <a class="btn btn-primary btn-lg" href="/ads/post" role="button">Post New Ad</a>
+        </div>
+    <% } else { %>
+        <div class="row">
+            <% ads.forEach(ad => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= ad.title %></h5>
+                            <p class="card-text"><%= ad.description %></p>
+                            <a href="/ads/<%= ad.id %>" class="btn btn-primary">View Ad</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <% }) %>
-    </div>
+            <% }) %>
+        </div>
+    <% } %>
 </div>
 
 <%- include('partials/footer') %>

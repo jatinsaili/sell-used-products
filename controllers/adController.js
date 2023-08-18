@@ -10,13 +10,17 @@ const AdController = {
             adsSnapshot.forEach(doc => {
                 ads.push({ id: doc.id, ...doc.data() });
             });
-            res.render('index', { ads });
+            if (ads.length === 0) {
+                res.render('index', { noAds: true });
+            } else {
+                res.render('index', { ads });
+            }
         } catch (error) {
             console.error("Error listing ads:", error);
             res.render('index', { error: "Failed to fetch ads. Please try again." });
         }
     },
-
+    
     // View a single ad
     viewAd: async (req, res) => {
         try {
