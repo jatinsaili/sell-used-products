@@ -17,4 +17,7 @@ router.put('/edit/:adId', isAuthenticated, AdsController.editAd);
 // Disable or expire an ad
 router.put('/disable/:adId', isAuthenticated, AdsController.disableAd);
 
+// List ads created by the user
+router.get('/myads', isAuthenticated, AdsController.myAds);
+
 module.exports = router;

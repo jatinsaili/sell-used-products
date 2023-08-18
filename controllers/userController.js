@@ -23,7 +23,7 @@ const UserController = {
         if (user.exists) {
             res.render('editProfileForm', { user: user.data() });
         } else {
-            res.redirect('/dashboard', { error: "User not found." });
+            res.redirect('/', { error: "User not found." });
         }
     },
 
@@ -33,7 +33,7 @@ const UserController = {
         try {
             const userId = req.session.userId; // Get user ID from session
             if (!userId) {
-                res.redirect('/login', { error: "Please login to view your profile." });
+                res.redirect('/user/login', { error: "Please login to view your profile." });
                 return;
             }
 
@@ -43,11 +43,11 @@ const UserController = {
             if (user.exists) {
                 res.render('profileView', { user: user.data() });
             } else {
-                res.redirect('/login', { error: "User not found." });
+                res.redirect('/user/login', { error: "User not found." });
             }
         } catch (error) {
             console.error("Error viewing profile:", error);
-            res.redirect('/dashboard', { error: "Failed to fetch profile. Please try again." });
+            res.redirect('/', { error: "Failed to fetch profile. Please try again." });
         }
     },
 
@@ -68,10 +68,10 @@ const UserController = {
                 email
             });
 
-            res.redirect('/login');
+            res.redirect('/user/loginForm');
         } catch (error) {
             console.error("Error registering user:", error);
-            res.render('register', { error: "Failed to register. Please try again." });
+            res.render('registerForm', { error: "Failed to register. Please try again." });
         }
     },
 
@@ -87,21 +87,21 @@ const UserController = {
                 const isValidPassword = await bcrypt.compare(password, user.password);
                 if (isValidPassword) {
                     req.session.userId = users.docs[0].id; // Store user ID in session
-                    res.redirect('/dashboard');
+                    res.redirect('/user/profile');
                     return;
                 }
             }
-            res.render('login', { error: "Invalid username or password." });
+            res.render('loginForm', { error: "Invalid username or password." });
         } catch (error) {
             console.error("Error logging in:", error);
-            res.render('login', { error: "Failed to login. Please try again." });
+            res.render('loginForm', { error: "Failed to login. Please try again." });
         }
     },
 
     // User Logout
     logout: (req, res) => {
         req.session.destroy(); // Clear user session
-        res.redirect('/login');
+        res.redirect('/user/login');
     },
 
     // Modify User Profile
@@ -121,7 +121,34 @@ const UserController = {
             console.error("Error updating profile:", error);
             res.render('profile', { error: "Failed to update profile. Please try again." });
         }
+    },
+
+    // View a specific user's profile and their ads
+    viewSpecificUserProfile: async (req, res) => {
+        try {
+            const userId = req.params.userId; // Get user ID from the route parameter
+            const userRef = db.collection('users').doc(userId);
+            const user = await userRef.get();
+
+            if (!user.exists) {
+                res.redirect('/', { error: "User not found." });
+                return;
+            }
+
+            // Fetch all ads created by the user
+            const adsSnapshot = await db.collection('ads').where('userId', '==', userId).get();
+            const ads = [];
+            adsSnapshot.forEach(doc => {
+                ads.push({ id: doc.id, ...doc.data() });
+            });
+
+            res.render('specificUserProfile', { user: user.data(), ads });
+        } catch (error) {
+            console.error("Error viewing specific user profile:", error);
+            res.redirect('/', { error: "Failed to fetch user profile. Please try again." });
+        }
     }
+
 };
 
 module.exports = UserController;

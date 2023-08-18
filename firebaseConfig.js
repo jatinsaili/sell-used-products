@@ -1,5 +1,8 @@
 const admin = require('firebase-admin');
 
+const serviceAccount = require('./sell-used-project-firebase-adminsdk.json');
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyAl1wECMQWruKvQf4BDOibfzEKJ-tckNAg",
   authDomain: "sell-used-project.firebaseapp.com",
@@ -11,7 +14,7 @@ const firebaseConfig = {
 
 // Initialize Firebase Admin SDK
 admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
+  credential: admin.credential.cert(serviceAccount),
   databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`
 });
 
