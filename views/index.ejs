@@ -2,14 +2,20 @@
 <%- include('partials/header') %>
 
 <div class="container mt-5">
-    <h1 class="mb-4">Active Ads</h1>
+
+    <!-- Jumbotron banner -->
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to Our Ads Platform!</h1>
+        <p class="lead">Discover amazing offers or post your own ad to reach a wider audience.</p>
+        <hr class="my-4">
+        <a class="btn btn-success btn-lg" href="/ads/post" role="button">Post an Ad</a>
+    </div>
+
+    <h2 class="mb-4">Active Ads</h2>
     <% if (noAds) { %>
-        <div class="jumbotron">
-            <h1 class="display-4">No ads found</h1>
-            <p class="lead">It seems there are no active ads at the moment.</p>
-            <hr class="my-4">
-            <p>Want to post a new ad? Click the button below.</p>
-            <a class="btn btn-primary btn-lg" href="/ads/post" role="button">Post New Ad</a>
+        <div class="alert alert-info">
+            <h4>No ads found</h4>
+            <p>It seems there are no active ads at the moment. Be the first to post one!</p>
         </div>
     <% } else { %>
         <div class="row">
