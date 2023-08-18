@@ -1,29 +1,10 @@
 // Required modules
 const express = require('express');
-const admin = require('firebase-admin');
+const db = require('./firebaseConfig');
 const userRoutes = require('./routes/user');
 const adRoutes = require('./routes/ads');
 const questionRoutes = require('./routes/questions');
 
-
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAl1wECMQWruKvQf4BDOibfzEKJ-tckNAg",
-  authDomain: "sell-used-project.firebaseapp.com",
-  projectId: "sell-used-project",
-  storageBucket: "sell-used-project.appspot.com",
-  messagingSenderId: "482192189030",
-  appId: "1:482192189030:web:a9415aecfba0e4e03c2fa7"
-};
-
-// Initialize Firebase Admin SDK
-admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
-  databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`
-});
-
-// Get a reference to the Firestore database
-const db = admin.firestore();
 
 // Initialize Express
 const app = express();
