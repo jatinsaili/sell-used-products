@@ -1,24 +1,24 @@
-const db = require('../firebaseConfig');
+const db = require('../firebaseConfig'); // Import the Firestore instance
+const bcrypt = require('bcrypt'); // For password hashing
 
 const UserController = {
 
     // User Registration
     register: async (req, res) => {
         try {
-            // Extract user details from request body
             const { username, password, email } = req.body;
 
-            // TODO: Hash the password before storing
+            // Hash the password before storing
+            const hashedPassword = await bcrypt.hash(password, 10);
 
             // Save user to Firestore
-            const userRef = db.collection('users').doc(); // Create a new doc with a generated ID
+            const userRef = db.collection('users').doc(); 
             await userRef.set({
                 username,
-                password, // Store the hashed password
+                password: hashedPassword,
                 email
             });
 
-            // Redirect to login page or dashboard after successful registration
             res.redirect('/login');
         } catch (error) {
             console.error("Error registering user:", error);
@@ -29,11 +29,19 @@ const UserController = {
     // User Login
     login: async (req, res) => {
         try {
-            // Extract login details from request body
             const { username, password } = req.body;
 
-            // TODO: Validate user credentials against Firestore
-
+            // Validate user credentials against Firestore
+            const users = await db.collection('users').where('username', '==', username).get();
+            if (!users.empty) {
+                const user = users.docs[0].data();
+                const isValidPassword = await bcrypt.compare(password, user.password);
+                if (isValidPassword) {
+                    req.session.userId = users.docs[0].id; // Store user ID in session
+                    res.redirect('/dashboard');
+                    return;
+                }
+            }
             res.render('login', { error: "Invalid username or password." });
         } catch (error) {
             console.error("Error logging in:", error);
@@ -43,24 +51,22 @@ const UserController = {
 
     // User Logout
     logout: (req, res) => {
-        // TODO: Clear user session
+        req.session.destroy(); // Clear user session
         res.redirect('/login');
     },
 
     // Modify User Profile
     modifyProfile: async (req, res) => {
         try {
-            // Extract updated profile details from request body
-            const { userId, username, email } = req.body;
+            const userId = req.session.userId; // Get user ID from session
+            const { username, email } = req.body;
 
-            // Update user details in Firestore
             const userRef = db.collection('users').doc(userId);
             await userRef.update({
                 username,
                 email
             });
 
-            // Redirect to profile page with a success message
             res.render('profile', { success: "Profile updated successfully." });
         } catch (error) {
             console.error("Error updating profile:", error);

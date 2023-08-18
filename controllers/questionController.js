@@ -37,8 +37,7 @@ const QuestionController = {
         } catch (error) {
             console.error("Error posting answer:", error);
             res.redirect(`/ads/${adId}`, { error: "Failed to post answer. Please try again." });
-        }
-    }
+        }    }
 };
 
 module.exports = QuestionController;
