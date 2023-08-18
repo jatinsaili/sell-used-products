@@ -68,7 +68,7 @@ const UserController = {
                 email
             });
 
-            res.redirect('/user/loginForm');
+            res.redirect('/user/login');
         } catch (error) {
             console.error("Error registering user:", error);
             res.render('registerForm', { error: "Failed to register. Please try again." });
@@ -145,7 +145,7 @@ const UserController = {
             res.render('specificUserProfile', { user: user.data(), ads });
         } catch (error) {
             console.error("Error viewing specific user profile:", error);
-            res.redirect('/', { error: "Failed to fetch user profile. Please try again." });
+            res.redirect({ error: "Failed to fetch user profile. Please try again." }, '/');
         }
     }
 
