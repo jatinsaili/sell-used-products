@@ -23,8 +23,16 @@ const AdController = {
             const adId = req.params.adId;
             const adRef = db.collection('ads').doc(adId);
             const ad = await adRef.get();
+
             if (ad.exists) {
-                res.render('adView', { ad: ad.data() });
+                // Fetch related questions and answers
+                const questionsSnapshot = await db.collection('questions').where('adId', '==', adId).get();
+                const questions = [];
+                questionsSnapshot.forEach(doc => {
+                    questions.push({ id: doc.id, ...doc.data() });
+                });
+
+                res.render('adView', { ad: ad.data(), questions });
             } else {
                 res.redirect('/ads', { error: "Ad not found." });
             }
