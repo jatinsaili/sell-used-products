@@ -1,24 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const UserController = require('../controllers/userController');
+const isAuthenticated = require('../middleware/isAuthenticated');
 
 // User registration
-router.post('/register', (req, res) => {
-    // Handle user registration logic
-});
+router.post('/register', UserController.register);
 
 // User login
-router.post('/login', (req, res) => {
-    // Handle user login logic
-});
+router.post('/login', UserController.login);
 
 // User logout
-router.get('/logout', (req, res) => {
-    // Handle user logout logic
-});
+router.get('/logout', isAuthenticated, UserController.logout);
 
 // Modify user profile
-router.put('/profile', (req, res) => {
-    // Handle profile modification logic
-});
+router.put('/profile', isAuthenticated, UserController.modifyProfile);
 
 module.exports = router;
