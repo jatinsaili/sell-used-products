@@ -1,0 +1,13 @@
+<%- include('partials/head', { title: 'Profile' }) %>
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Your Profile</h1>
+
+    <p><strong>Username:</strong> <%= user.username %></p>
+    <p><strong>Email:</strong> <%= user.email %></p>
+
+    <a href="/user/editProfile" class="btn btn-primary">Edit Profile</a>
+</div>
+
+<%- include('partials/footer') %>
