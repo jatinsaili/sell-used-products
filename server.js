@@ -12,7 +12,7 @@ const PORT = 3000;
 
 // Sample route (You'll set up more routes later)
 app.get('/', (req, res) => {
-  res.send('Hello, Firebase and Firestore are integrated!');
+  res.render('index'); // Serve the index view
 });
 
 app.use('/user', userRoutes);

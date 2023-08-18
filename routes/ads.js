@@ -3,9 +3,6 @@ const router = express.Router();
 const AdsController = require('../controllers/adsController');
 const isAuthenticated = require('../middleware/isAuthenticated');
 
-// Route to list all active ads
-router.get('/', AdsController.listAds);
-
 // Route to view a single ad
 router.get('/:adId', AdsController.viewAd);
 
