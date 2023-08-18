@@ -39,6 +39,11 @@ app.use((req, res, next) => {
 
 // main page
 app.get('/', AdController.listAds);
+// About page route
+app.get('/about', (req, res) => {
+  res.render('about');
+});
+
 
 app.use('/user', userRoutes);
 app.use('/ads', adRoutes);
