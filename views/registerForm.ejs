@@ -4,6 +4,12 @@
 <div class="container mt-5">
     <h1 class="mb-4">Register</h1>
 
+    <% if (error) { %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+    <% } %>
+
     <form action="/user/register" method="post" enctype="application/x-www-form-urlencoded">
         <div class="form-group">
             <label for="username">Username:</label>
