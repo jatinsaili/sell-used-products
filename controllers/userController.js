@@ -68,10 +68,10 @@ const UserController = {
                 email
             });
 
-            res.redirect('/login');
+            res.redirect('/loginForm');
         } catch (error) {
             console.error("Error registering user:", error);
-            res.render('register', { error: "Failed to register. Please try again." });
+            res.render('registerForm', { error: "Failed to register. Please try again." });
         }
     },
 
@@ -91,10 +91,10 @@ const UserController = {
                     return;
                 }
             }
-            res.render('login', { error: "Invalid username or password." });
+            res.render('loginForm', { error: "Invalid username or password." });
         } catch (error) {
             console.error("Error logging in:", error);
-            res.render('login', { error: "Failed to login. Please try again." });
+            res.render('loginForm', { error: "Failed to login. Please try again." });
         }
     },
 
