@@ -1,6 +1,10 @@
 // Required modules
 const express = require('express');
 const admin = require('firebase-admin');
+const userRoutes = require('./routes/user');
+const adRoutes = require('./routes/ads');
+const questionRoutes = require('./routes/questions');
+
 
 // Firebase configuration
 const firebaseConfig = {
@@ -29,6 +33,10 @@ const PORT = 3000;
 app.get('/', (req, res) => {
   res.send('Hello, Firebase and Firestore are integrated!');
 });
+
+app.use('/user', userRoutes);
+app.use('/ads', adRoutes);
+app.use('/questions', questionRoutes);
 
 // Start the server
 app.listen(PORT, () => {
