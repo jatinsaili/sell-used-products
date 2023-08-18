@@ -33,7 +33,7 @@ const AdController = {
                     questions.push({ id: doc.id, ...doc.data() });
                 });
 
-                res.render('adView', { ad: ad.data(), questions });
+                res.render('adView', {id: adId, ad: ad.data(), questions });
             } else {
                 res.redirect('/');
             }
