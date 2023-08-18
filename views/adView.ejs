@@ -1,0 +1,35 @@
+<%- include('partials/head', { title: 'Ad Details' }) %>
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+    <h1 class="mb-4"><%= ad.title %></h1>
+    <p><strong>Description:</strong> <%= ad.description %></p>
+    <p><strong>Start Date:</strong> <%= new Date(ad.startDate).toLocaleDateString() %></p>
+    <p><strong>End Date:</strong> <%= new Date(ad.endDate).toLocaleDateString() %></p>
+
+    <!-- Questions and Answers section -->
+    <div class="accordion mt-4" id="questionsAccordion">
+        <% questions.forEach((question, index) => { %>
+            <div class="card">
+                <div class="card-header" id="heading<%= index %>">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
+                            <%= question.content %>
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="collapse<%= index %>" class="collapse" aria-labelledby="heading<%= index %>" data-parent="#questionsAccordion">
+                    <div class="card-body">
+                        <%= question.answer ? question.answer : 'No answer yet.' %>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+
+    <a href="/ads/askQuestion" class="btn btn-primary mt-3">Ask Question</a>
+    <a href="/ads" class="btn btn-secondary mt-3 ml-2">Back to Ads List</a>
+</div>
+
+<%- include('partials/footer') %>
