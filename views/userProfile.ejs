@@ -1,0 +1,30 @@
+<%- include('partials/head', { title: 'User Profile' }) %>
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Profile: <%= user.name %></h1> <!-- Assuming the user has a 'name' field -->
+    <p><strong>Email:</strong> <%= user.email %></p> <!-- Assuming the user has an 'email' field -->
+    <p><strong>Joined:</strong> <%= new Date(user.joinDate).toLocaleDateString() %></p> <!-- Assuming the user has a 'joinDate' field -->
+
+    <!-- User's Ads section -->
+    <h2 class="mt-4">Ads by <%= user.name %>:</h2>
+    <% if (ads.length > 0) { %>
+        <ul class="list-group mt-3">
+            <% ads.forEach(ad => { %>
+                <li class="list-group-item">
+                    <h5><%= ad.title %></h5>
+                    <p><%= ad.description %></p>
+                    <p><strong>Start Date:</strong> <%= new Date(ad.startDate).toLocaleDateString() %></p>
+                    <p><strong>End Date:</strong> <%= new Date(ad.endDate).toLocaleDateString() %></p>
+                    <a href="/ads/<%= ad.id %>" class="btn btn-primary btn-sm">View Ad</a>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p><%= user.name %> has not posted any ads yet.</p>
+    <% } %>
+
+    <a href="/" class="btn btn-secondary mt-3">Back to Home</a>
+</div>
+
+<%- include('partials/footer') %>
