@@ -35,17 +35,17 @@ const AdController = {
 
                 res.render('adView', { ad: ad.data(), questions });
             } else {
-                res.redirect('/ads', { error: "Ad not found." });
+                res.redirect('/');
             }
         } catch (error) {
             console.error("Error viewing ad:", error);
-            res.redirect('/ads', { error: "Failed to fetch ad. Please try again." });
+            res.redirect('/');
         }
     },
 
     // Display post ad form
     postAdForm: (req, res) => {
-        res.render('postAd');
+        res.render('postAd', {error: null});
     },
 
     // Post an Ad
@@ -75,7 +75,7 @@ const AdController = {
         const adRef = db.collection('ads').doc(adId);
         const ad = await adRef.get();
         if (ad.exists) {
-            res.render('editAd', { ad: ad.data() });
+            res.render('editAd', {error:null, ad: ad.data() });
         } else {
             res.redirect('/myads', { error: "Ad not found." });
         }
@@ -129,7 +129,7 @@ const AdController = {
             adsSnapshot.forEach(doc => {
                 ads.push({ id: doc.id, ...doc.data() });
             });
-            res.render('myAds', { ads });
+            res.render('myAds', {error:null,  ads });
         } catch (error) {
             console.error("Error listing user's ads:", error);
             res.render('myAds', { error: "Failed to fetch your ads. Please try again." });
