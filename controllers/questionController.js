@@ -2,6 +2,24 @@ const db = require('../firebaseConfig'); // Import the Firestore instance
 
 const QuestionController = {
 
+    // Display the form to post a new question
+    addQuestionForm: (req, res) => {
+        const adId = req.params.adId;
+        res.render('addQuestionForm', { adId });
+    },
+
+    // Display the form to answer a question
+    answerQuestionForm: async (req, res) => {
+        const questionId = req.params.questionId;
+        const questionRef = db.collection('questions').doc(questionId);
+        const question = await questionRef.get();
+        if (question.exists) {
+            res.render('answerQuestionForm', { question: question.data() });
+        } else {
+            res.redirect(`/ads/${req.params.adId}`, { error: "Question not found." });
+        }
+    },
+    
     // Post a Question to an Ad
     postQuestion: async (req, res) => {
         try {

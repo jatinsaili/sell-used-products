@@ -3,6 +3,55 @@ const bcrypt = require('bcrypt'); // For password hashing
 
 const UserController = {
 
+    // Display the registration form
+    registerForm: (req, res) => {
+        res.render('registerForm');
+    },
+
+    // Display the login form
+    loginForm: (req, res) => {
+        res.render('loginForm');
+    },
+
+    
+
+    // Display the profile edit form
+    editProfileForm: async (req, res) => {
+        const userId = req.session.userId;
+        const userRef = db.collection('users').doc(userId);
+        const user = await userRef.get();
+        if (user.exists) {
+            res.render('editProfileForm', { user: user.data() });
+        } else {
+            res.redirect('/dashboard', { error: "User not found." });
+        }
+    },
+
+
+    // View User Profile
+    viewProfile: async (req, res) => {
+        try {
+            const userId = req.session.userId; // Get user ID from session
+            if (!userId) {
+                res.redirect('/login', { error: "Please login to view your profile." });
+                return;
+            }
+
+            const userRef = db.collection('users').doc(userId);
+            const user = await userRef.get();
+
+            if (user.exists) {
+                res.render('profileView', { user: user.data() });
+            } else {
+                res.redirect('/login', { error: "User not found." });
+            }
+        } catch (error) {
+            console.error("Error viewing profile:", error);
+            res.redirect('/dashboard', { error: "Failed to fetch profile. Please try again." });
+        }
+    },
+
+
     // User Registration
     register: async (req, res) => {
         try {
