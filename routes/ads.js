@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const AdsController = require('../controllers/adsController');
+const AdsController = require('../controllers/adController');
 const isAuthenticated = require('../middleware/isAuthenticated');
 
 // Route to view a single ad
