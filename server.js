@@ -1,5 +1,6 @@
 // Required modules
 const express = require('express');
+const path = require('path');
 const db = require('./firebaseConfig');
 const userRoutes = require('./routes/user');
 const adRoutes = require('./routes/ads');
@@ -9,6 +10,10 @@ const AdController = require('./controllers/adController');
 // Initialize Express
 const app = express();
 const PORT = 3000;
+
+// Set up EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // main page
 app.get('/', AdController.listAds);
