@@ -1,14 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const QuestionsController = require('../controllers/questionsController');
+const isAuthenticated = require('../middleware/isAuthenticated');
 
 // Post a question to an ad
-router.post('/:adId/question', (req, res) => {
-    // Handle question posting logic
-});
+router.post('/:adId/question', QuestionsController.postQuestion);
 
 // Answer a question
-router.post('/:adId/answer/:questionId', (req, res) => {
-    // Handle answer posting logic
-});
+router.post('/:adId/answer/:questionId', isAuthenticated, QuestionsController.answerQuestion);
 
 module.exports = router;
