@@ -14,7 +14,7 @@ const QuestionController = {
         const questionRef = db.collection('questions').doc(questionId);
         const question = await questionRef.get();
         if (question.exists) {
-            res.render('answerQuestionForm', { question: question.data() });
+            res.render('answerQuestionForm', {questionId, question: question.data() });
         } else {
             res.redirect(`/ads/${req.params.adId}`, { error: "Question not found." });
         }
