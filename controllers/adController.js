@@ -42,6 +42,11 @@ const AdController = {
         }
     },
 
+    // Display post ad form
+    postAdForm: (req, res) => {
+        res.render('postAdForm');
+    },
+
     // Post an Ad
     postAd: async (req, res) => {
         try {
@@ -56,10 +61,22 @@ const AdController = {
                 endDate
             });
 
-            res.redirect('/dashboard'); // Redirect to dashboard or ad listing page
+            res.redirect('/myads');
         } catch (error) {
             console.error("Error posting ad:", error);
             res.render('postAd', { error: "Failed to post ad. Please try again." });
+        }
+    },
+
+    // Display ad edit form
+    editAdForm: async (req, res) => {
+        const adId = req.params.adId;
+        const adRef = db.collection('ads').doc(adId);
+        const ad = await adRef.get();
+        if (ad.exists) {
+            res.render('editAdForm', { ad: ad.data() });
+        } else {
+            res.redirect('/myads', { error: "Ad not found." });
         }
     },
 
@@ -77,7 +94,8 @@ const AdController = {
                 endDate
             });
 
-            res.redirect('/dashboard'); // Redirect to dashboard or ad listing page
+            res.redirect('/myads'); // Redirect to user's ads page
+
         } catch (error) {
             console.error("Error editing ad:", error);
             res.render('editAd', { error: "Failed to edit ad. Please try again." });
@@ -94,12 +112,29 @@ const AdController = {
                 endDate: new Date().toISOString() // Set the end date to now to disable the ad
             });
 
-            res.redirect('/dashboard'); // Redirect to dashboard or ad listing page
+            res.redirect('/myads'); // Redirect to user's ads page
         } catch (error) {
             console.error("Error disabling ad:", error);
-            res.redirect('/dashboard', { error: "Failed to disable ad. Please try again." });
+            res.redirect('/', { error: "Failed to disable ad. Please try again." });
+        }
+    },
+
+    // List ads created by the user
+    myAds: async (req, res) => {
+        try {
+            const userId = req.session.userId; // Assuming user ID is stored in session
+            const adsSnapshot = await db.collection('ads').where('userId', '==', userId).get();
+            const ads = [];
+            adsSnapshot.forEach(doc => {
+                ads.push({ id: doc.id, ...doc.data() });
+            });
+            res.render('myAds', { ads });
+        } catch (error) {
+            console.error("Error listing user's ads:", error);
+            res.render('myAds', { error: "Failed to fetch your ads. Please try again." });
         }
     }
+
 };
 
 module.exports = AdController;
