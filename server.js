@@ -4,7 +4,7 @@ const db = require('./firebaseConfig');
 const userRoutes = require('./routes/user');
 const adRoutes = require('./routes/ads');
 const questionRoutes = require('./routes/questions');
-
+const AdController = require('./controllers/adController');
 
 // Initialize Express
 const app = express();
@@ -12,7 +12,7 @@ const PORT = 3000;
 
 // Sample route (You'll set up more routes later)
 app.get('/', (req, res) => {
-  res.render('index'); // Serve the index view
+  AdController.listAds
 });
 
 app.use('/user', userRoutes);
